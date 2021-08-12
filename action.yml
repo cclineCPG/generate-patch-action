@@ -1,13 +1,14 @@
-name: "Python Container Action Template"
-description: "Get started with Python Container actions"
-author: "Jacob Tomlinson"
+name: "Generate Engine Patch"
+description: "Generates a patch file for an engine change"
+author: "Charlie Cline"
 inputs:
-  myInput:
-    description: "Input to use"
-    default: "world"
+  parent_branch:
+    description: 'Branch to use to generate patch'
+    required: true
+    default: 'main'
 outputs:
-  myOutput:
-    description: "Output from the action"
+  out_patch_file:
+    description: "Patch file that was generated"
 runs:
   using: "docker"
   image: "Dockerfile"
