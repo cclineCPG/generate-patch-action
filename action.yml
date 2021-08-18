@@ -6,6 +6,14 @@ inputs:
     description: 'Branch to use to generate patch'
     required: true
     default: 'main'
+  patches_dir:
+    description: 'Folder to output patches'
+    required: true
+    default: 'patches'
+  specific_folder:
+    description: 'Top level folder to generate patches for'
+    required: false
+    default: '.'
 outputs:
   out_patch_file:
     description: "Patch file that was generated"
