@@ -15,7 +15,7 @@ def git_setup():
                           f'login {git_actor}',
                           f'password {git_pass}'])
 
-    subprocess.call(['chmod', '600', netrc_path])
+    os.chmod(netrc_path, 0o600)
     subprocess.call(['git', 'config', '--global', 'user.email', 'actions@github.com'])
     subprocess.call(['git', 'config', '--global', 'user.name', 'GitHub Action'])
 
