@@ -2,11 +2,12 @@ import os
 import subprocess
 import posixpath
 
+git_actor = os.environ['GITHUB_ACTOR']
+git_pass = os.environ['GITHUB_TOKEN']
+
 
 def git_setup():
     netrc_path = posixpath.join(os.environ['HOME'], '.netrc')
-    git_actor = os.environ['GITHUB_ACTOR']
-    git_pass = os.environ['GITHUB_TOKEN']
     with open(netrc_path, 'w') as netrc:
         netrc.writelines(['machine github.com',
                           f'login {git_actor}',
@@ -53,6 +54,10 @@ def main():
     git_setup()
 
     out_patch_file = generate_patch_file(parent_branch, patch_dir, specific_folder)
+
+    subprocess.call(['git', 'commit', '-m', '"Patch File"', f'--author="{git_actor}@users.noreply.github.com"'])
+    subprocess.call(['git', 'push', 'origin'])
+
     print(f"::set-output name=out_patch_file::{out_patch_file}")
 
 
