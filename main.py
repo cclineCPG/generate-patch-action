@@ -55,8 +55,12 @@ def main():
 
     out_patch_file = generate_patch_file(parent_branch, patch_dir, specific_folder)
 
-    subprocess.call(['git', 'commit', '-m', '"Patch File"', f'--author="{git_actor}@users.noreply.github.com"'])
-    subprocess.call(['git', 'push', 'origin'])
+    repository = os.environ["GITHUB_REPOSITORY"]
+    remote_repo = f'https://{git_actor}:{git_pass}@github.com/{repository}.git'
+    subprocess.call(['git', 'config', 'http.sslVerify', 'false'])
+    subprocess.call(['git', 'commit', '-m', '"Patch File"'])
+    subprocess.call(['git', 'push', f'"{remote_repo}"', 'HEAD:"test3"', '-f'])
+    # subprocess.call(['git', 'push', 'origin'])
 
     print(f"::set-output name=out_patch_file::{out_patch_file}")
 
