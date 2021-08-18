@@ -1,16 +1,7 @@
-FROM python:3-slim AS builder
-ADD . /app
-WORKDIR /app
+FROM python:3.6-alpine
+ENV PYTHONUNBUFFERED 1
 
-# A distroless container image with Python and some basics like SSL certificates
-# https://github.com/GoogleContainerTools/distroless
-FROM gcr.io/distroless/python3-debian10
+RUN apk update && apk add --no-cache bash git openssh
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y git
-
-COPY --from=builder /app /app
-WORKDIR /app
-ENV PYTHONPATH /app
-CMD ["/app/main.py"]
+ADD . .
+CMD [ "python", "./main.py" ]
